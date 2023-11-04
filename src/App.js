@@ -52,6 +52,15 @@ const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 export default function App() {
+  return (
+    <div>
+      <Navbar />
+      <Main />
+    </div>
+  );
+}
+
+function Main() {
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
   const [isOpen1, setIsOpen1] = useState(true);
@@ -63,7 +72,6 @@ export default function App() {
 
   return (
     <>
-      <Navbar />
       <main className="main">
         <div className="box">
           <button
