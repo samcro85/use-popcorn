@@ -1,16 +1,16 @@
 import { useState } from "react";
 
-export default function Navbar() {
+// Structural component
+export function Navbar({ children }) {
   return (
     <nav className="nav-bar">
-      <Logo />
-      <Search />
-      <NumResults />
+      {children}
     </nav>
   );
 }
 
-function Logo() {
+// Presentational component
+export function Logo() {
   return (
     <div className="logo">
       <span role="img">🍿</span>
@@ -19,7 +19,8 @@ function Logo() {
   );
 }
 
-function Search() {
+// Stateful component
+export function Search() {
   const [query, setQuery] = useState("");
 
   return (
@@ -33,10 +34,11 @@ function Search() {
   );
 }
 
-function NumResults() {
+// Presentational component
+export function NumResults({ movies }) {
   return (
     <p className="num-results">
-      Found <strong>X</strong> results
+      Found <strong>{movies.length}</strong> results
     </p>
   );
 }
