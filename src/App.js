@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Navbar, Logo, Search, NumResults } from "./components/Navbar";
-import { ListBox, MoviesList } from "./components/ListBox";
-import WatchedBox from "./components/WatchedBox";
+import { Box, MoviesList } from "./components/ListBox";
+import { WatchedSummary, WatchedMovieList } from "./components/WatchedBox";
 
 const tempMovieData = [
   {
@@ -27,9 +27,33 @@ const tempMovieData = [
   },
 ];
 
+const tempWatchedData = [
+  {
+    imdbID: "tt1375666",
+    Title: "Inception",
+    Year: "2010",
+    Poster:
+      "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
+    runtime: 148,
+    imdbRating: 8.8,
+    userRating: 10,
+  },
+  {
+    imdbID: "tt0088763",
+    Title: "Back to the Future",
+    Year: "1985",
+    Poster:
+      "https://m.media-amazon.com/images/M/MV5BZmU0M2Y1OGUtZjIxNi00ZjBkLTg1MjgtOWIyNThiZWIwYjRiXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
+    runtime: 116,
+    imdbRating: 8.5,
+    userRating: 9,
+  },
+];
+
 // Structural component
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
+  const [watched, setWatched] = useState(tempWatchedData);
 
   return (
     <div>
@@ -38,11 +62,25 @@ export default function App() {
         <Search />
         <NumResults movies={movies} />
       </Navbar>
+
       <Main>
-        <ListBox>
+        {/* Possiamo passare degli elementi invece che come children come delle props:
+        <Box element={<MoviesList movies={movies} />} />
+         */}
+        <Box>
           <MoviesList movies={movies} />
-        </ListBox>
-        <WatchedBox />
+        </Box>
+
+        {/* 
+        <Box element={<>
+          <WatchedSummary watched={watched} />
+          <WatchedMovieList watched={watched} />
+          </>} />
+        */}
+        <Box>
+          <WatchedSummary watched={watched} />
+          <WatchedMovieList watched={watched} />
+        </Box>
       </Main>
     </div>
   );
