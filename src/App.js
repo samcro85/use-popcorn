@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Navbar, Logo, Search, NumResults } from "./components/Navbar";
-import ListBox from "./components/ListBox";
+import { ListBox, MoviesList } from "./components/ListBox";
 import WatchedBox from "./components/WatchedBox";
 
 const tempMovieData = [
@@ -33,22 +33,22 @@ export default function App() {
 
   return (
     <div>
-      <Navbar movies={movies}>
+      <Navbar>
         <Logo />
         <Search />
         <NumResults movies={movies} />
       </Navbar>
-      <Main movies={movies} />
+      <Main>
+        <ListBox>
+          <MoviesList movies={movies} />
+        </ListBox>
+        <WatchedBox />
+      </Main>
     </div>
   );
 }
 
 // Structural component
-function Main({ movies }) {
-  return (
-    <main className="main">
-      <ListBox movies={movies} />
-      <WatchedBox />
-    </main>
-  );
+function Main({ children }) {
+  return <main className="main">{children}</main>;
 }
