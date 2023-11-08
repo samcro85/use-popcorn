@@ -3,6 +3,7 @@ import { useState } from "react";
 // se 'maxRating' non viene attribuito nessun valore ne verrà assegnato uno di default per non incorrere in errore
 export default function StarRating({ maxRating = 5 }) {
   const [rating, setRating] = useState(0);
+  const [tempRating, setTempRating] = useState(0);
 
   const containerStyle = {
     display: "flex",
@@ -23,19 +24,33 @@ export default function StarRating({ maxRating = 5 }) {
     setRating(rating);
   }
 
+  function handleHoverIn(rating){
+setTempRating(rating)
+  }
+
+  function handleHoverOut(){
+setTempRating(0)
+  }
+
   return (
     <div style={containerStyle}>
       <div style={starContainerStyle}>
         {Array.from({ length: maxRating }, (_, index) => (
-          <Star key={index} onRate={() => handleRating(index + 1)} full={rating >= index +1} />
+          <Star
+            key={index}
+            onRate={() => handleRating(index + 1)}
+            full={tempRating ? tempRating>= index + 1: rating >= index + 1}
+            onHoverIn={() => handleHoverIn(index +1)}
+            onHoverOut = {handleHoverOut}
+          />
         ))}
       </div>
-      <p style={textStyle}>{rating || ""}</p>
+      <p style={textStyle}>{tempRating || rating || ""}</p>
     </div>
   );
 }
 
-function Star({ onRate, full }) {
+function Star({ onRate, full, onHoverIn, onHoverOut }) {
   const starStyle = {
     width: "48px",
     height: "48px",
@@ -44,7 +59,12 @@ function Star({ onRate, full }) {
   };
 
   return (
-    <span role="button" onClick={onRate}>
+    <span
+      role="button"
+      onClick={onRate}
+      onMouseEnter={onHoverIn}
+      onMouseLeave={onHoverOut}
+    >
       {full ? (
         <svg
           style={starStyle}
